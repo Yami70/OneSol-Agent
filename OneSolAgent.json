@@ -1,0 +1,364 @@
+{
+  "name": "OneSolAgent",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Employee Handbook",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "handbook_0",
+              "fieldType": "file"
+            },
+            {
+              "fieldLabel": "handbook_1",
+              "fieldType": "file"
+            },
+            {
+              "fieldLabel": "handbook_2",
+              "fieldType": "file"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -1680,
+        -208
+      ],
+      "id": "9e5e0210-7336-41c7-955c-8dd04856f632",
+      "name": "On form submission",
+      "webhookId": "230337b2-0c60-49c5-902a-686e1b2fdc4f"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "onesoln8n",
+          "mode": "list",
+          "cachedResultName": "onesoln8n"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        -1504,
+        -352
+      ],
+      "id": "d325ab19-df1d-414d-9cf0-356a13849d82",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "xFhLadOvBtWmMSxO",
+          "name": "Pinecone account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "loader": "textLoader",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -1248,
+        -112
+      ],
+      "id": "d85f1267-9bb6-4c6e-a06c-6da7cc15e2ec",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -992,
+        -368
+      ],
+      "id": "f4f7e020-f800-4a36-a786-72dc0d29fa09",
+      "name": "When chat message received",
+      "webhookId": "bec2ce65-c8b0-4be6-8275-3a3b630121f4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -752,
+        -368
+      ],
+      "id": "9b9d6f4f-c159-4318-9be8-a64fcf5aae6f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        -160
+      ],
+      "id": "d34b10a7-9e75-484e-89cd-b9522733f379",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "3pgmPTVlXQMrdQtL",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -752,
+        -160
+      ],
+      "id": "76f805f4-cae2-40dd-9754-7a27f9365aa5",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "description": "Use this tool to answer Hr policy, compliance and onboarding related questions.",
+        "topK": 3
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1.1,
+      "position": [
+        -608,
+        -160
+      ],
+      "id": "b2915421-aac1-42df-8ef8-c254ba1a813a",
+      "name": "Answer questions with a vector store"
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "onesoln8n",
+          "mode": "list",
+          "cachedResultName": "onesoln8n"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        48
+      ],
+      "id": "645e082d-879e-4f01-8f23-eee0fc9e0236",
+      "name": "Pinecone Vector Store1",
+      "credentials": {
+        "pineconeApi": {
+          "id": "xFhLadOvBtWmMSxO",
+          "name": "Pinecone account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        64
+      ],
+      "id": "e31f8211-65fe-4e67-948d-48b639cabcc2",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "3pgmPTVlXQMrdQtL",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1456,
+        -144
+      ],
+      "id": "68d257e1-8dc4-459b-8619-db15965f34df",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "B3oaMlNGg0FKD51c",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -736,
+        256
+      ],
+      "id": "115dd3bb-1eb1-4479-bb6b-7984f88538e1",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "B3oaMlNGg0FKD51c",
+          "name": "OpenAI account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer questions with a vector store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store1": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "ac337153-492a-47cb-b017-a5e6856f3310",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5dfb1f8920dd5fb7cf2b014986c627557d4daefd8523a445a71aedaf9be3b593"
+  },
+  "nodeGroups": [],
+  "id": "WYF1auQMgG3LInN9",
+  "tags": []
+}
